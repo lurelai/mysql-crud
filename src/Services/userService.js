@@ -1,16 +1,16 @@
 const User = require('../Models/userModel')
 
-const createUser = async ()=>{
-    const { message } = await User(`INSERT INTO Users VALUES("name_u", "email", "password")`, ({results, err})=>{
-        if(err){
-            if(err.code === "ER_DUP_ENTRY")
-                return "User alredy exist"
-        }
+const createUser = ({u_name, u_email, u_password})=>{
+    return new Promise((resolve)=>{
+        User(`INSERT INTO Users VALUES("${u_name}", "${u_email}", "${u_password}")`, ({results, err})=>{
+            if(err){
+                if(err.code === "ER_DUP_ENTRY")
+                    return resolve("User alredy exist")
+            }
 
-        return "Created"
+            return resolve("User created")
+        })
     })
-
-    return message;
 }
 
 module.exports = {
