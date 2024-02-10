@@ -1,4 +1,4 @@
-const { createUser } = require('../Services/userService')
+const { createUser, findUsers } = require('../Services/userService')
 
 const create = async (req, res)=>{
     const { u_name, u_password, u_email } = req.body
@@ -13,7 +13,14 @@ const create = async (req, res)=>{
     return res.status(201).send(msg)
 }
 
+const find = async (conditions, callBack=()=>{})=>{
+    const {users, message} = await findUsers(conditions, callBack) //[ [conditions...], operator ]
+
+    callBack({users, message})
+}
+
 module.exports = {
-    create
+    create,
+    find
 }
 

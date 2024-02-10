@@ -15,11 +15,9 @@ const User = (query, callBack)=>{
         // Create a the Users if don't have one
         if(!hasUser){
             pool.query(`CREATE TABLE Users(
-            u_name varchar(100),
-            u_email varchar(100),
-            u_password varchar(100),
-            UNIQUE(u_name)
-            )`)
+            ID varchar(100),
+            u_name varchar(100), u_email varchar(100), u_password varchar(100),
+            UNIQUE(u_name), UNIQUE(ID))`)
         }
 
         pool.query(query, (err, results)=>{
