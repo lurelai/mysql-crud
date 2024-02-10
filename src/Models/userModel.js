@@ -1,6 +1,6 @@
 const pool = require('../Database/db.js')
 
-const User = (query, callBack)=>{
+const User = (query, callBack=()=>{})=>{
     let hasUser = false
 
     // verify if there's a table named Users

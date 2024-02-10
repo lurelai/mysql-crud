@@ -65,9 +65,40 @@ const eraseUser = (ID)=>{
     })
 }
 
+const updateUser = (ID, whatUpdate={})=>{
+    return new Promise(async (resolve)=>{
+        const { message: result } = await findUsers(`ID="${ID}"`)
+
+        if( result === "user not founded")
+            return resolve({message: 'invalid operation'})
+
+        // {
+        //  u_email: ldsknfklvc,
+        //  u_password: fjdsklj,
+        // }
+        const {u_email, u_password} = whatUpdate
+        let query = ""
+
+        if(u_email && u_password)
+            halfQuery = `u_email="${u_email}", u_password="${u_password}"`
+
+        if(!u_email)
+            halfQuery = `u_password="${u_password}"`
+        
+        if(!u_password)
+            halfQuery = `u_email="${u_email}"`
+
+        console.log(`UPDATE Users SET ${halfQuery} WHERE ID=${ID}`)
+
+        User(`UPDATE Users SET ${halfQuery} WHERE ID="${ID}"`)
+        return resolve({message: 'user updated'})
+    })
+}
+
 module.exports = {
     createUser,
     findUsers,
-    eraseUser
+    eraseUser,
+    updateUser
 }
 

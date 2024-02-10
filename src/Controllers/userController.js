@@ -1,4 +1,4 @@
-const { createUser, findUsers, eraseUser } = require('../Services/userService')
+const { createUser, findUsers, eraseUser, updateUser } = require('../Services/userService')
 
 const create = async (req, res)=>{
     const { u_name, u_password, u_email } = req.body
@@ -22,8 +22,21 @@ const erase = async (req, res)=>{
     res.send(message)
 }
 
+const update = async (req, res)=>{
+    const { ID } = req.params
+    const {u_email, u_password} = req.body
+
+    if(!u_email && !u_password)
+        return res.status(401).send('Bad requestion')
+
+    const {message} = await updateUser( ID, req.body )
+
+    res.send(message)
+}
+
 module.exports = {
     create,
-    erase
+    erase,
+    update
 }
 
