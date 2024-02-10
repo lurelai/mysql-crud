@@ -16,7 +16,7 @@ const createUser = ({u_name, u_email, u_password})=>{
     })
 }
 
-const findUsers = (conditions, callBack=()=>{})=>{
+const findUsers = (conditions)=>{
     return new Promise((resolve)=>{
         // Verify if "conditions" is an array with multiples instructions
         if(Array.isArray(conditions)){
@@ -54,8 +54,20 @@ const findUsers = (conditions, callBack=()=>{})=>{
     })
 }
 
+const eraseUser = (ID)=>{
+    return new Promise((resolve)=>{
+        User(`DELETE FROM Users WHERE ID="${ID}"`, ((results, err)=>{
+            if ( results.results.affectedRows === 0 )
+                return resolve({message: "No one user was deleted!"})
+
+            return resolve({message: `User deleted! ${results.results.affectedRows}`})
+        }))
+    })
+}
+
 module.exports = {
     createUser,
-    findUsers
+    findUsers,
+    eraseUser
 }
 
